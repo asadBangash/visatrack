@@ -65,4 +65,37 @@ class VisaApplicationWorkflowTest extends TestCase
         $this->assertNotEmpty($barcode);
         $this->assertStringStartsWith("\x89PNG", $barcode);
     }
+
+    public function test_admin_can_delete_application(): void
+    {
+        Storage::fake('local');
+        $admin = $this->admin();
+        $location = Location::factory()->create();
+        $path = 'photographs/test-delete.jpg';
+        Storage::disk('local')->put($path, 'fake');
+
+        $application = VisaApplication::query()->create([
+            'confirmation_number' => 'AA099DEL01',
+            'applicant_name' => 'Delete Me',
+            'date_of_birth' => '1990-01-01',
+            'place_of_birth' => 'City',
+            'gender' => 'male',
+            'nationality' => 'Pakistan',
+            'purpose_of_travel' => 'TOUR',
+            'passport_number' => 'DEL123456',
+            'passport_lookup_hash' => 'hash',
+            'photograph_path' => $path,
+            'location_id' => $location->id,
+            'visa_type' => 'NIV',
+            'status' => VisaApplication::STATUS_APPLICATION_RECEIVED,
+            'created_by' => $admin->id,
+        ]);
+
+        $this->actingAs($admin)
+            ->delete(route('admin.applications.destroy', $application))
+            ->assertRedirect(route('admin.applications.index'));
+
+        $this->assertDatabaseMissing('visa_applications', ['id' => $application->id]);
+        Storage::disk('local')->assertMissing($path);
+    }
 }

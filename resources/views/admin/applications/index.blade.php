@@ -21,7 +21,7 @@
     <table class="table table-hover mb-0">
         <thead>
         <tr>
-            <th>Confirmation</th><th>Applicant</th><th>Passport</th><th>Location</th><th>Status</th><th>Created</th><th></th>
+            <th>Confirmation</th><th>Applicant</th><th>Passport</th><th>Location</th><th>Status</th><th>Created</th><th class="text-end">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +33,14 @@
                 <td>{{ $application->location->display_name }}</td>
                 <td>{{ $application->statusLabel() }}</td>
                 <td>{{ $application->created_at->format('Y-m-d') }}</td>
-                <td><a href="{{ route('admin.applications.show', $application) }}">View</a></td>
+                <td class="text-end text-nowrap">
+                    <a href="{{ route('admin.applications.show', $application) }}">View</a>
+                    <form class="d-inline" method="post" action="{{ route('admin.applications.destroy', $application) }}" onsubmit="return confirm('Delete {{ $application->confirmation_number }}?');">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-link btn-sm text-danger p-0 ms-2" type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

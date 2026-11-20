@@ -50,4 +50,9 @@ class Location extends Model
 
         return $this->display_name;
     }
+
+    public function statusEmbassyLinkLabel(): string
+    {
+        return $this->consulate_title ?: $this->display_name;
+    }
 }

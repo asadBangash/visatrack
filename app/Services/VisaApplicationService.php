@@ -110,4 +110,22 @@ class VisaApplicationService
             return $application->fresh(['location']);
         });
     }
+
+    public function delete(VisaApplication $application, User $admin): void
+    {
+        DB::transaction(function () use ($application, $admin) {
+            $confirmation = $application->confirmation_number;
+            $applicationId = $application->id;
+
+            if ($application->photograph_path && Storage::disk('local')->exists($application->photograph_path)) {
+                Storage::disk('local')->delete($application->photograph_path);
+            }
+
+            $application->delete();
+
+            $this->auditLogService->log($admin, 'visa.deleted', VisaApplication::class, $applicationId, [
+                'confirmation_number' => $confirmation,
+            ]);
+        });
+    }
 }

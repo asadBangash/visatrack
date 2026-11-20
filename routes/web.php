@@ -35,6 +35,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/applications/{application}', [VisaApplicationController::class, 'show'])->name('applications.show');
         Route::get('/applications/{application}/edit', [VisaApplicationController::class, 'edit'])->name('applications.edit');
         Route::put('/applications/{application}', [VisaApplicationController::class, 'update'])->name('applications.update');
+        Route::delete('/applications/{application}', [VisaApplicationController::class, 'destroy'])->name('applications.destroy');
         Route::patch('/applications/{application}/status', [VisaApplicationController::class, 'updateStatus'])->name('applications.status');
         Route::get('/applications/{application}/confirmation', [VisaApplicationController::class, 'confirmation'])->name('applications.confirmation');
         Route::get('/applications/{application}/pdf', [VisaApplicationController::class, 'pdf'])->name('applications.pdf');

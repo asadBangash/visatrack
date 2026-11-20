@@ -57,6 +57,11 @@
                 <a class="btn btn-outline-primary" href="{{ route('admin.applications.confirmation', $application) }}" target="_blank" onclick="window.open(this.href); return false;">Print Confirmation</a>
                 <a class="btn btn-outline-primary" href="{{ route('admin.applications.pdf', $application) }}">Download PDF</a>
                 <a class="btn btn-outline-secondary" href="{{ route('admin.applications.edit', $application) }}">Edit Applicant</a>
+                <form method="post" action="{{ route('admin.applications.destroy', $application) }}" onsubmit="return confirm('Delete this application permanently? This cannot be undone.');">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-outline-danger w-100" type="submit">Delete Application</button>
+                </form>
             </div>
         </div>
         <form class="card shadow-sm mt-3" method="post" action="{{ route('admin.applications.status', $application) }}">

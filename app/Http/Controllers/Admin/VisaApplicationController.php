@@ -120,6 +120,15 @@ class VisaApplicationController extends Controller
             ->with('success', 'Status updated.');
     }
 
+    public function destroy(Request $request, VisaApplication $application)
+    {
+        $this->applicationService->delete($application, $request->user());
+
+        return redirect()
+            ->route('admin.applications.index')
+            ->with('success', 'Application deleted.');
+    }
+
     public function confirmation(VisaApplication $application)
     {
         $application->load('location');

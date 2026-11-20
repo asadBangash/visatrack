@@ -64,19 +64,27 @@ class PublicVisaLookupService
     public function popupPayload(VisaApplication $application): array
     {
         $statusLabel = $application->statusLabel();
+        $embassyLink = $application->location->statusEmbassyLinkLabel();
 
         $messages = [
             VisaApplication::STATUS_APPLICATION_RECEIVED => 'Your visa application case has been received and is awaiting further processing.',
-            VisaApplication::STATUS_APPROVED => 'Your visa application is in final processing.',
-            VisaApplication::STATUS_ISSUED => 'Your visa has been issued.',
+            VisaApplication::STATUS_APPROVED => 'Your visa application is in final processing. If you have not received a decision in more than 10 working days, please see the webpage for contact information of the embassy or consulate where you submitted your application. For more information, please visit',
+            VisaApplication::STATUS_ISSUED => 'Your visa is in final processing. If you have not received it in more than 10 working days, please see the webpage for contact information of the embassy or consulate where you submitted your application. For more information, please visit',
         ];
+
+        $message = $messages[$application->status] ?? '';
+        $showEmbassy = in_array($application->status, [
+            VisaApplication::STATUS_APPROVED,
+            VisaApplication::STATUS_ISSUED,
+        ], true);
 
         return [
             'status' => $statusLabel,
             'confirmation_number' => $application->confirmation_number,
             'created' => $application->created_at->format('d-M-Y'),
             'updated' => $application->updated_at->format('d-M-Y'),
-            'message' => $messages[$application->status] ?? '',
+            'message' => $message,
+            'embassy_link' => $showEmbassy ? $embassyLink : null,
             'location' => $application->location->display_name,
             'visa_type' => $application->visa_type,
         ];
