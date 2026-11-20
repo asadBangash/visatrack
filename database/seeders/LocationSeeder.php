@@ -48,5 +48,10 @@ class LocationSeeder extends Seeder
             'consulate_title' => 'U.S. Embassy Islamabad',
             'street_address' => 'Diplomatic Enclave, Ramna 5, Islamabad, Pakistan',
         ]);
+
+        Location::query()->where('display_name', 'PAKISTAN, PESHAWAR')->update([
+            'consulate_title' => 'U.S. Consulate General Peshawar',
+            'street_address' => 'Fort Road, Peshawar, Pakistan',
+        ]);
     }
 }

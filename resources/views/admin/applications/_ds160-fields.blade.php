@@ -40,7 +40,7 @@
         <select class="form-select" name="location_id" id="location_id" required>
             <option value="">Select location</option>
             @foreach ($locations as $location)
-                <option value="{{ $location->id }}" @selected(old('location_id', optional($application)->location_id) == $location->id)>{{ $location->confirmationLocationLabel() }}</option>
+                <option value="{{ $location->id }}" @selected(old('location_id', optional($application)->location_id) == $location->id)>{{ $location->display_name }}</option>
             @endforeach
         </select>
     </div>
