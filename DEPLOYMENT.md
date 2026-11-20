@@ -44,7 +44,11 @@ php artisan view:cache
 APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://your-domain.com
+```
 
+`APP_URL` must be the site root **without** `/public` (e.g. `https://ceac.stateus.org`). The app forces that root for all links on production, even when the host runs `public/index.php` from the project folder.
+
+```ini
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
