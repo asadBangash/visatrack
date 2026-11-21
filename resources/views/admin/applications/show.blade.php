@@ -31,6 +31,8 @@
                             <dt class="col-sm-4">Passport</dt><dd class="col-sm-8">{{ $application->maskedPassport() }}</dd>
                             <dt class="col-sm-4">Purpose of travel</dt><dd class="col-sm-8">{{ $application->purpose_of_travel ?: '—' }}</dd>
                             <dt class="col-sm-4">Completed on</dt><dd class="col-sm-8">{{ $application->formattedCompletedOn() }}</dd>
+                            <dt class="col-sm-4">Case created (status)</dt><dd class="col-sm-8">{{ $application->formattedCaseCreatedOn() }}</dd>
+                            <dt class="col-sm-4">Case last updated (status)</dt><dd class="col-sm-8">{{ $application->formattedCaseUpdatedOn() }}</dd>
                             <dt class="col-sm-4">Location</dt><dd class="col-sm-8">{{ $application->location->confirmationLocationLabel() }}</dd>
                             <dt class="col-sm-4">Visa type</dt><dd class="col-sm-8">{{ $application->visa_type }}</dd>
                         </dl>

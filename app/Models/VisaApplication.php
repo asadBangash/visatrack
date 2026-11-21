@@ -23,6 +23,8 @@ class VisaApplication extends Model
         'nationality',
         'purpose_of_travel',
         'completed_on',
+        'case_created_on',
+        'case_updated_on',
         'required_documents',
         'confirmation_address',
         'passport_number',
@@ -42,6 +44,8 @@ class VisaApplication extends Model
             'passport_number' => 'encrypted',
             'date_of_birth' => 'date',
             'completed_on' => 'date',
+            'case_created_on' => 'date',
+            'case_updated_on' => 'date',
         ];
     }
 
@@ -75,6 +79,20 @@ class VisaApplication extends Model
         $date = $this->completed_on ?? $this->created_at;
 
         return strtoupper($date->format('d M Y'));
+    }
+
+    public function formattedCaseCreatedOn(): string
+    {
+        $date = $this->case_created_on ?? $this->created_at;
+
+        return $date->format('d-M-Y');
+    }
+
+    public function formattedCaseUpdatedOn(): string
+    {
+        $date = $this->case_updated_on ?? $this->updated_at;
+
+        return $date->format('d-M-Y');
     }
 
     public function genderLabel(): string

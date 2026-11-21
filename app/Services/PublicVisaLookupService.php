@@ -81,8 +81,8 @@ class PublicVisaLookupService
         return [
             'status' => $statusLabel,
             'confirmation_number' => $application->confirmation_number,
-            'created' => $application->created_at->format('d-M-Y'),
-            'updated' => $application->updated_at->format('d-M-Y'),
+            'created' => $application->formattedCaseCreatedOn(),
+            'updated' => $application->formattedCaseUpdatedOn(),
             'message' => $message,
             'embassy_link' => $showEmbassy ? $embassyLink : null,
             'location' => $application->location->display_name,

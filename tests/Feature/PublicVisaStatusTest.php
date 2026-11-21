@@ -81,6 +81,53 @@ class PublicVisaStatusTest extends TestCase
         $response->assertJsonPath('popup.status', 'Approved');
     }
 
+    public function test_popup_uses_custom_case_dates_when_set(): void
+    {
+        $this->seed(LocationSeeder::class);
+        $admin = User::factory()->create(['is_admin' => true, 'password' => Hash::make('x')]);
+        $location = Location::query()->first();
+
+        $passportService = app(PassportLookupService::class);
+        $surnameService = app(SurnameVerificationService::class);
+
+        VisaApplication::query()->create([
+            'confirmation_number' => 'AA099DATE1',
+            'applicant_name' => 'Date Demo',
+            'date_of_birth' => '1981-02-11',
+            'place_of_birth' => 'Karachi, Pakistan',
+            'gender' => 'male',
+            'nationality' => 'Pakistan',
+            'purpose_of_travel' => 'TOUR',
+            'completed_on' => '2025-11-19',
+            'case_created_on' => '2026-08-19',
+            'case_updated_on' => '2026-08-21',
+            'passport_number' => 'DATED001',
+            'passport_lookup_hash' => $passportService->hash('DATED001'),
+            'surname_verification_hash' => $surnameService->hashForToken('DDEMO'),
+            'surname_verification_override' => 'DDEMO',
+            'photograph_path' => 'photographs/demo.png',
+            'location_id' => $location->id,
+            'visa_type' => 'NIV',
+            'status' => VisaApplication::STATUS_ISSUED,
+            'created_by' => $admin->id,
+        ]);
+
+        $code = app(CaptchaService::class)->current();
+
+        $response = $this->postJson(route('visa-status.check'), [
+            'visa_type' => 'NIV',
+            'location_id' => $location->id,
+            'confirmation_number' => 'AA099DATE1',
+            'passport_number' => 'DATED001',
+            'surname' => 'DDEMO',
+            'captcha' => $code,
+        ]);
+
+        $response->assertOk();
+        $response->assertJsonPath('popup.created', '19-Aug-2026');
+        $response->assertJsonPath('popup.updated', '21-Aug-2026');
+    }
+
     public function test_lookup_accepts_matching_name_token_for_surname_field(): void
     {
         $this->seed(LocationSeeder::class);

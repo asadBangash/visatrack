@@ -17,6 +17,8 @@ trait Ds160ApplicantRules
             'nationality' => ['required', 'string', 'max:64'],
             'purpose_of_travel' => ['required', 'string', 'max:255'],
             'completed_on' => ['nullable', 'date'],
+            'case_created_on' => ['nullable', 'date'],
+            'case_updated_on' => ['nullable', 'date'],
             'required_documents' => ['nullable', 'string', 'max:1000'],
             'confirmation_address' => ['nullable', 'string', 'max:1000'],
             'passport_number' => ['required', 'string', 'max:20'],

@@ -36,6 +36,16 @@
         <input class="form-control" type="date" name="completed_on" id="completed_on" value="{{ old('completed_on', isset($application) && $application->completed_on ? $application->completed_on->format('Y-m-d') : now()->format('Y-m-d')) }}">
     </div>
     <div class="col-md-6">
+        <label class="form-label" for="case_created_on">Case created (status check modal)</label>
+        <input class="form-control" type="date" name="case_created_on" id="case_created_on" value="{{ old('case_created_on', isset($application) && $application->case_created_on ? $application->case_created_on->format('Y-m-d') : now()->format('Y-m-d')) }}">
+        <div class="form-text">Shown as “Case Created” on the public visa status popup.</div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="case_updated_on">Case last updated (status check modal)</label>
+        <input class="form-control" type="date" name="case_updated_on" id="case_updated_on" value="{{ old('case_updated_on', isset($application) && $application->case_updated_on ? $application->case_updated_on->format('Y-m-d') : now()->format('Y-m-d')) }}">
+        <div class="form-text">Shown as “Case Last Updated” on the public visa status popup.</div>
+    </div>
+    <div class="col-md-6">
         <label class="form-label" for="location_id">Consular location</label>
         <select class="form-select" name="location_id" id="location_id" required>
             <option value="">Select location</option>
