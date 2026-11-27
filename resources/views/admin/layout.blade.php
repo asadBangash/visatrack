@@ -3,20 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Admin') — Visa Demo</title>
+    <title>@yield('title', 'Admin') — {{ config('app.name', 'Visa Tracking') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .demo-banner{background:#fff3cd;border-bottom:1px solid #eadca3;font-size:.85rem}
         .sidebar{min-height:calc(100vh - 56px)}
         .nav-link.active{font-weight:600}
     </style>
 </head>
 <body class="bg-light">
-<div class="demo-banner text-center py-1">UNOFFICIAL DEMO — NOT VALID FOR TRAVEL</div>
 <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Visa Tracking Admin</a>
-        <span class="navbar-text text-white-50 d-none d-md-inline">Demonstration only</span>
     </div>
 </nav>
 <div class="container-fluid">
